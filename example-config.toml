@@ -1,0 +1,30 @@
+source = "/"
+exclude = [
+  "/home/*/.cache",
+  "*~"
+]
+host = "laptop"
+
+[[repositories]]
+name = "myrepo"
+location = "/my/restic/repo"
+password-command = "pass restic/myrepo"
+keep-last = 42
+keep-hourly = 24
+keep-daily = 7
+keep-weekly = 3
+keep-monthly = 12
+keep-yearly = 100
+keep-tag = "important"
+keep-within = "2y5m7d3h"
+
+[[repositories]]
+name = "sftprepo"
+location = "sftp:user@host:/srv/restic-repo"
+password-file = "/my/password/file"
+
+[[repositories]]
+name = "s3bucket"
+location = "s3:storage.example.com/bucket"
+aws-access-key = "ABCDEF"
+aws-secret-access-key = "s3cr3ts"

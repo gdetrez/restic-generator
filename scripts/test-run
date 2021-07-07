@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eux
+
+clear
+tmpdir=$(mktemp -d --suffix='[restic-generator]')
+cargo run -- $tmpdir $tmpdir $tmpdir
+bat $(find $tmpdir -type f)
