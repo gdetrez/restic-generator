@@ -339,6 +339,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "restic-generator"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "assert_cmd",
+ "home",
+ "insta",
+ "libc",
+ "serde",
+ "structopt",
+ "tempfile",
+ "toml",
+]
+
+[[package]]
 name = "ryu"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -432,21 +447,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-xid",
-]
-
-[[package]]
-name = "systemd-restic-generator"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "assert_cmd",
- "home",
- "insta",
- "libc",
- "serde",
- "structopt",
- "tempfile",
- "toml",
 ]
 
 [[package]]

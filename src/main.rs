@@ -54,9 +54,9 @@ fn main() -> anyhow::Result<()> {
 fn default_config_path(user: bool) -> Result<PathBuf> {
     if user {
         let home = env::var("HOME").with_context(|| "HOME environment variable not found")?;
-        Ok(PathBuf::from(home).join(".config/restic/config.toml"))
+        Ok(PathBuf::from(home).join(".config/restic-generator/config.toml"))
     } else {
-        Ok(PathBuf::from("/etc/restic/config.toml"))
+        Ok(PathBuf::from("/etc/restic-generator/config.toml"))
     }
 }
 

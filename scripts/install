@@ -3,5 +3,6 @@
 set -eux
 
 cargo build --release
-sudo cp target/release/systemd-restic-generator /usr/local/lib/systemd/user-generators/
+sudo install -d /usr/local/lib/systemd/user-generators/
+sudo install -t /usr/local/lib/systemd/user-generators/ target/release/restic-generator 
 systemctl --user daemon-reload
