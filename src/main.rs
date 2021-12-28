@@ -17,8 +17,8 @@ struct Opt {
     config: Option<PathBuf>,
 
     normal_dir: PathBuf,
-    early_dir: PathBuf,
-    late_dir: PathBuf,
+    _early_dir: PathBuf,
+    _late_dir: PathBuf,
 }
 
 #[derive(Debug)]
@@ -36,6 +36,7 @@ fn main() -> anyhow::Result<()> {
         program_name: env!("CARGO_BIN_NAME").into(),
         hostname: sys::hostname()?,
     };
+    eprintln!("Using config file {}", context.config_path.display());
     let config: Config =
         read_config(&context.config_path).with_context(|| "error reading config")?;
 
