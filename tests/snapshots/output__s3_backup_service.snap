@@ -13,7 +13,9 @@ Environment=RESTIC_REPOSITORY="s3:storage.example.com/bucket"
 Environment=AWS_ACCESS_KEY="ABCDEF"
 Environment=AWS_SECRET_ACCESS_KEY="s3cr3ts"
 Type=oneshot
+ExecStartPre=restic unlock
 ExecStart=restic backup --host="laptop" --exclude="/home/*/.cache" --exclude="*~" /
+SuccessExitStatus=3
 Nice=10
 IOSchedulingClass=idle
 

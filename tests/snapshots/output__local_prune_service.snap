@@ -11,6 +11,7 @@ SourcePath=example-config.toml
 Environment=RESTIC_REPOSITORY="/my/restic/repo"
 Environment=RESTIC_PASSWORD_COMMAND="pass restic/myrepo"
 Type=oneshot
+ExecStartPre=restic unlock
 ExecStart=restic prune
 Nice=10
 IOSchedulingClass=idle

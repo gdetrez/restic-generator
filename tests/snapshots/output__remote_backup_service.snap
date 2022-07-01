@@ -12,7 +12,9 @@ ConditionPathExists=/
 Environment=RESTIC_REPOSITORY="sftp:user@host:/srv/restic-repo"
 Environment=RESTIC_PASSWORD_FILE="/my/password/file"
 Type=oneshot
+ExecStartPre=restic unlock
 ExecStart=restic backup --host="laptop" --exclude="/home/*/.cache" --exclude="*~" /
+SuccessExitStatus=3
 Nice=10
 IOSchedulingClass=idle
 

@@ -11,6 +11,7 @@ SourcePath=example-config.toml
 Environment=RESTIC_REPOSITORY="/my/restic/repo"
 Environment=RESTIC_PASSWORD_COMMAND="pass restic/myrepo"
 Type=oneshot
+ExecStartPre=restic unlock
 ExecStart=restic forget --host="laptop" --path="/" --keep-last="42" --keep-hourly="24" --keep-daily="7" --keep-weekly="3" --keep-monthly="12" --keep-yearly="100" --keep-tag="important" --keep-within="2y5m7d3h"
 Nice=10
 IOSchedulingClass=idle

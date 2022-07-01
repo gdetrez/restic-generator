@@ -13,7 +13,9 @@ ConditionPathExists=/my/restic/repo
 Environment=RESTIC_REPOSITORY="/my/restic/repo"
 Environment=RESTIC_PASSWORD_COMMAND="pass restic/myrepo"
 Type=oneshot
+ExecStartPre=restic unlock
 ExecStart=restic backup --host="laptop" --exclude="/home/*/.cache" --exclude="*~" /
+SuccessExitStatus=3
 Nice=10
 IOSchedulingClass=idle
 

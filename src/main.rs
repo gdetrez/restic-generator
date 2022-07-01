@@ -121,6 +121,7 @@ fn generate_backup_service(
         writeln!(file, "Environment=AWS_SECRET_ACCESS_KEY=\"{}\"", value)?;
     }
     writeln!(file, "Type=oneshot")?;
+    writeln!(file, "ExecStartPre=restic unlock")?;
     writeln!(
         file,
         "ExecStart={}",
@@ -130,6 +131,8 @@ fn generate_backup_service(
             config.exclude.as_slice()
         )
     )?;
+    // 3 is returned when a file cannot be read (e.g. it is removed during the backup.)
+    writeln!(file, "SuccessExitStatus=3",)?;
     writeln!(file, "Nice=10",)?;
     writeln!(file, "IOSchedulingClass=idle",)?;
     Ok(())
@@ -174,6 +177,7 @@ fn generate_forget_service(
         writeln!(file, "Environment=AWS_SECRET_ACCESS_KEY=\"{}\"", value)?;
     }
     writeln!(file, "Type=oneshot")?;
+    writeln!(file, "ExecStartPre=restic unlock")?;
     writeln!(
         file,
         "ExecStart={}",
@@ -223,6 +227,7 @@ fn generate_prune_service(
         writeln!(file, "Environment=AWS_SECRET_ACCESS_KEY=\"{}\"", value)?;
     }
     writeln!(file, "Type=oneshot")?;
+    writeln!(file, "ExecStartPre=restic unlock")?;
     writeln!(file, "ExecStart=restic prune")?;
     writeln!(file, "Nice=10")?;
     writeln!(file, "IOSchedulingClass=idle")?;
