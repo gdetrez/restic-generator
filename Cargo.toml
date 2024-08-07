@@ -10,7 +10,6 @@ anyhow = "1.0"
 home = "0.5"
 libc = "0.2.97"
 serde = { version = "1.0", features = ["derive"] }
-structopt = "0.3"
 toml = "0.5"
 
 [dev-dependencies]

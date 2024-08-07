@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eux
 
+export RESTIC_GENERATOR_CONFIG=$PWD/example-config.toml
+
 clear
 tmpdir=$(mktemp -d --suffix='[restic-generator]')
 cargo run -- $tmpdir $tmpdir $tmpdir

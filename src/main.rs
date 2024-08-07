@@ -4,22 +4,13 @@ use std::{
     io::Write,
     path::{Path, PathBuf},
 };
-use structopt::StructOpt;
 
 mod config;
 mod sys;
 
 use config::{Config, RepositoryConfig};
 
-#[derive(Debug, StructOpt)]
-struct Opt {
-    #[structopt(short, long)]
-    config: Option<PathBuf>,
-
-    normal_dir: PathBuf,
-    _early_dir: PathBuf,
-    _late_dir: PathBuf,
-}
+const USAGE: &'static str = &"Usage: restig-generator <normal-dir> <early-dir> <late-dir>";
 
 #[derive(Debug)]
 struct Context {
@@ -29,10 +20,16 @@ struct Context {
 }
 
 fn main() -> anyhow::Result<()> {
-    let opt = Opt::from_args();
+    let Some(normal_dir) = env::args().nth(1).map(PathBuf::from) else {
+        eprintln!("{}", USAGE);
+        std::process::exit(1);
+    };
     let is_user = env::var("USER").is_ok(); // Indicate we're generating user-level units
+    let config_path = env::var("RESTIC_GENERATOR_CONFIG")
+        .map(PathBuf::from)
+        .unwrap_or(default_config_path(is_user)?);
     let context = Context {
-        config_path: opt.config.clone().unwrap_or(default_config_path(is_user)?),
+        config_path,
         program_name: env!("CARGO_BIN_NAME").into(),
         hostname: sys::hostname()?,
     };
@@ -42,22 +39,19 @@ fn main() -> anyhow::Result<()> {
 
     for repository in config.repositories.iter() {
         generate_backup_service(
-            &opt.normal_dir
-                .join(format!("restic-{}-backup.service", repository.name)),
+            &normal_dir.join(format!("restic-{}-backup.service", repository.name)),
             &context,
             &config,
             &repository,
         )?;
         generate_forget_service(
-            &opt.normal_dir
-                .join(format!("restic-{}-forget.service", repository.name)),
+            &normal_dir.join(format!("restic-{}-forget.service", repository.name)),
             &context,
             &config,
             &repository,
         )?;
         generate_prune_service(
-            &opt.normal_dir
-                .join(format!("restic-{}-prune.service", repository.name)),
+            &normal_dir.join(format!("restic-{}-prune.service", repository.name)),
             &context,
             &config,
             &repository,
