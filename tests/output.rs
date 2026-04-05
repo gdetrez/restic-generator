@@ -10,8 +10,8 @@ macro_rules! snapshot_test {
             let early_dir = TempDir::new()?;
             let late_dir = TempDir::new()?;
             let mut cmd = Command::cargo_bin("restic-generator")?;
-            cmd.arg("-c")
-                .arg($config)
+            cmd.env("RESTIC_GENERATOR_CONFIG", $config);
+            cmd
                 .arg(normal_dir.path())
                 .arg(early_dir.path())
                 .arg(late_dir.path());
